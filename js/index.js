@@ -1,5 +1,8 @@
+
+
 let client=null;
 let contractInstance=null;
+let ipfs=null;
 let contractAddress='ct_2qzbFfdc1UiKJhi8oXLnXk14HkE6CRtPtsjgiQkRVZGTT4jNSY';
 let contractSource=`
 contract AePhotos=
@@ -26,19 +29,34 @@ contract AePhotos=
 `;
 
 window.addEventListener('load',function(){
+
+     ipfs=new IPFS({host:'ipfs.infura.io',port:5001,protocol:'https'});
+   console.log(ipfs);
     Ae.Aepp().then(function(result){
         console.log("new client",result);
         client=result;
     client.getContractInstance(contractSource,{contractAddress}).then(function(result){
             console.log("contract instance",result);
             contractInstance=result;
+        contractInstance.methods.getAllPhotos().then(function(res){
+                res.map(function(photoInfo){
+                    axios.get(`https://ipfs.io/ipfs/${photoInfo.ipfsHash}`).then(function(result){
+                        console.log("image data",result.data);
+                      addImageToDom(result.data,photoInfo.name);  
+                    }).catch(function(error){
+                        console.error(error);
+                    });
+                });
+        }).catch(function(err){
+            console.error(err);
+        })
     }).catch(function(error){
         console.error(error);
     })
     }).catch(function(error){
         console.error("error",error);
     });
-})
+});
 
 
 document.getElementById("submit").addEventListener("click", handleSubmitButton);
@@ -57,7 +75,24 @@ async function sendDataToAeNode(picture,imageName){
     let reader= new FileReader();
     reader.onloadend= async function(){
         console.log(reader.result);
-        addImageToDom(reader.result,imageName);
+
+        ipfs.add(reader.result,function(err,res){
+            if(err){
+                console.error(err);
+                return;
+            }
+            console.log(res);
+            contractInstance.methods.addPhoto(imageName,res).then(function(result){
+                axios.get(`https://ipfs.io/ipfs/${res}`).then(function(result){
+                    addImageToDom(result.data,imageName);
+                }).catch(function(error){
+                    console.error(err);
+                })
+
+            }).catch(function(err){console.error(err)})
+
+        });
+        
     }
 
     reader.readAsDataURL(picture);
