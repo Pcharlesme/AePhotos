@@ -29,6 +29,12 @@ window.addEventListener('load',function(){
     Ae.Aepp().then(function(result){
         console.log("new client",result);
         client=result;
+    client.getContractInstance(contractSource,{contractAddress}).then(function(result){
+            console.log("contract instance",result);
+            contractInstance=result;
+    }).catch(function(error){
+        console.error(error);
+    })
     }).catch(function(error){
         console.error("error",error);
     });
