@@ -28,9 +28,9 @@ contract AePhotos=
         Map.lookup_default(Call.caller,state.allPhotos,[])
 `;
 
-window.addEventListener('load',async function(){
+window.addEventListener('load',function(){
 
-     ipfs=await new IPFS({host:'ipfs.infura.io',port:5001,protocol:'https'});
+     ipfs=new IPFS({host:'ipfs.infura.io',port:5001,protocol:'https'});
    console.log(ipfs);
     Ae.Aepp().then(function(result){
         console.log("new client",result);
