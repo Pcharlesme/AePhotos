@@ -70,6 +70,7 @@ async function handleSubmitButton(){
         console.log("Both fields are compulsory");
         return;
     }
+    document.getElementById("pic-name").value="";
    console.log(imageName,picture);
    document.getElementById("loader").style.display="block";
    sendDataToAeNode(picture,imageName);
