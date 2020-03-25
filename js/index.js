@@ -39,7 +39,9 @@ window.addEventListener('load',function(){
             console.log("contract instance",result);
             contractInstance=result;
         contractInstance.methods.getAllPhotos().then(function(res){
-                res.map(function(photoInfo){
+            console.log("res",res);
+            console.log("resDecoded",res.decodedResult);
+                res.decodedResult.map(function(photoInfo){
                     axios.get(`https://ipfs.io/ipfs/${photoInfo.ipfsHash}`).then(function(result){
                         console.log("image data",result.data);
                       addImageToDom(result.data,photoInfo.name);  
