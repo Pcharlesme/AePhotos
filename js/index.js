@@ -41,6 +41,9 @@ window.addEventListener('load',function(){
         contractInstance.methods.getAllPhotos().then(function(res){
             console.log("res",res);
             console.log("resDecoded",res.decodedResult);
+            if(res.decodedResult.length==0){
+                document.getElementById("loader").style.display="none";
+            }
                 res.decodedResult.map(function(photoInfo){
                     axios.get(`https://ipfs.io/ipfs/${photoInfo.ipfsHash}`).then(function(result){
                         console.log("image data",result.data);
