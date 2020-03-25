@@ -76,7 +76,7 @@ margin:10px auto;
 .loader,
 .loader:before,
 .loader:after {
-  background: #f7296e;
+  background: purple;
   -webkit-animation: load1 1s infinite ease-in-out;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
