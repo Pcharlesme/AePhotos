@@ -74,6 +74,7 @@ async function handleSubmitButton(){
         return;
     }
     document.getElementById("pic-name").value="";
+    document.getElementById("my-inp").value="";
    console.log(imageName,picture);
    document.getElementById("loader").style.display="block";
    sendDataToAeNode(picture,imageName);
@@ -94,6 +95,8 @@ async function sendDataToAeNode(picture,imageName){
                 axios.get(`https://ipfs.io/ipfs/${res}`).then(function(result){
                     addImageToDom(result.data,imageName);
                     document.getElementById("loader").style.display="none";
+                    picture=null;
+            
                 }).catch(function(error){
                     console.error(err);
                 })
@@ -129,8 +132,10 @@ function addImageToDom(imageSrc,imageName){
 
 
 document.getElementById("my-inp").addEventListener("change",function(event){
+    console.log(document.getElementById("my-inp").value);
+    if(document.getElementById("my-inp").value !=""&&document.getElementById("my-inp").value!=null){
     picture=event.currentTarget.files[0];
     console.log(picture);
-
+}
 
 })
