@@ -87,7 +87,9 @@ margin:10px auto;
     color: #ffffff;
     text-indent: -9999em;
     margin: 88px auto;
-    position: relative;
+    left:140px;
+   
+    position: fixed;
     font-size: 11px;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
