@@ -45,6 +45,7 @@ window.addEventListener('load',function(){
                     axios.get(`https://ipfs.io/ipfs/${photoInfo.ipfsHash}`).then(function(result){
                         console.log("image data",result.data);
                       addImageToDom(result.data,photoInfo.name);  
+                      document.getElementById("loader").style.display="none";
                     }).catch(function(error){
                         console.error(error);
                     });
@@ -70,6 +71,7 @@ async function handleSubmitButton(){
         return;
     }
    console.log(imageName,picture);
+   document.getElementById("loader").style.display="block";
    sendDataToAeNode(picture,imageName);
 }
 
@@ -87,6 +89,7 @@ async function sendDataToAeNode(picture,imageName){
             contractInstance.methods.addPhoto(imageName,res).then(function(result){
                 axios.get(`https://ipfs.io/ipfs/${res}`).then(function(result){
                     addImageToDom(result.data,imageName);
+                    document.getElementById("loader").style.display="none";
                 }).catch(function(error){
                     console.error(err);
                 })
