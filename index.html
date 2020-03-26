@@ -1,37 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>AePhotos</title>
-    <link rel="stylesheet" href="./CSS/style.css">
-   
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="dns-prefetch" href="https://maxcdn.bootstrapcdn.com">
+  <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+  <link rel="dns-prefetch" href="https://unpkg.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  
+  <title>AePhotos</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
-    <div class="all-body">
-    <div id="loader" class="loader"></div>
-    <header>
-        <h4>AePhotos</h4>
-    </header>
+  <nav class="navbar navbar-expand-md bg-warning navbar-dark fixed-top">
+    <a class="navbar-brand" href="#">AePhotos</a>
+  
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#add-photos">Add Photos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#my-photos">My Photos</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container my-5">
+    <div id="loader"></div>
 
-    <section id="main">
-        <input id="pic-name" type="text" placeholder="Save Image with a name">
-        <input id="my-inp" type="file">
-        <button id="submit">Submit</button>
+    <section id="add-photos" class="border border-warning p-2" style="margin-top: 20%;">
+      <h3>Add Images</h3>
+      <form class="needs-validation my-3" novalidate>
+        <div class="form-group">
+          <input type="text" class="form-control" id="pic-name" placeholder="Save Photo with a name" required>
+          <div class="valid-feedback">Valid.</div>
+          <div class="invalid-feedback">Please enter photo name.</div>
+        </div>
+        
+        <div class="form-group">
+          <label for="select-photo">Select Photo</label>
+          <input type="file" class="form-control-file" id="select-photo" accept="image/*" required>
+          <div class="valid-feedback">Valid.</div>
+          <div class="invalid-feedback">Please select photo.</div>
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" id="submit-photo" class="btn btn-outline-warning">Add Photo</button>
+        </div>
+      </form>
     </section>
 
-
-    <section id="all-images">
-        <h3>Saved Images</h3>
-       
+    <section id="my-photos" class="my-4">
+      <h3>My Images</h3>
+      <div id="all-photos"></div>
     </section>
-</div>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://unpkg.com/@aeternity/aepp-sdk@6.1.2/dist/aepp-sdk.browser-script.js"></script>
-    <script src="js/ipfs-mini.js"></script>
-    <script src="js/index.js">
-       
-    </script>
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        var forms = document.getElementsByClassName('needs-validation');
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+  </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/@aeternity/aepp-sdk@6.1.2/dist/aepp-sdk.browser-script.js"></script>
+  <script src="js/ipfs-mini.js"></script>
+  <script src="js/index.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

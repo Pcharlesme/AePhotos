@@ -1,0 +1,18 @@
+contract AePhotos=
+
+  record photo =
+    { name:string,
+      imageHash:string,
+      timestamp:int }
+  
+  record state={allPhotos:map(address,list(photo))}
+  
+  stateful entrypoint init()={allPhotos={}}
+
+  stateful entrypoint addPhoto(name':string, imageHash':string)=
+    let newPhoto={name=name',imageHash=imageHash',timestamp=Chain.timestamp}
+    let newPhotosList=newPhoto::getPhotos()
+    put(state{allPhotos[Call.caller]=newPhotosList})
+
+  entrypoint getPhotos()=
+    Map.lookup_default(Call.caller,state.allPhotos,[])
